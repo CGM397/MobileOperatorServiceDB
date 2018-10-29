@@ -2,7 +2,7 @@ package DAO;
 import java.sql.*;
 
 public class BaseDao {
-    private static String driver="com.mysql.cj.jdbc.Driver";
+    private static String driver="com.mysql.jdbc.Driver";
     private static String url="jdbc:mysql://localhost:3306/mobileOperatorService?serverTimezone=UTC&useSSL=false";
     private static String user="root";
     private static String password="root";
