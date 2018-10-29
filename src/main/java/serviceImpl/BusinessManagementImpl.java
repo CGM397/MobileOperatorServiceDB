@@ -112,27 +112,30 @@ public class BusinessManagementImpl implements BusinessManagement {
         return orderDao.update(oid, endDate);
     }
 
-    public void call(String cid, int minutes, String year, String month) {
+    public double call(String cid, int minutes, String year, String month) {
         Client client = clientDao.find(cid);
+        double cost = 0;
         if(client.getLeftCall() < minutes){
+            cost = (minutes - client.getLeftCall()) * 0.5;
             client.setLeftCall(0);
-            double cost = (minutes - client.getLeftCall()) * 0.5;
             client.setBalance(client.getBalance() - cost);
             monthlyBillDao.update(cost, cid, year, month);
         }else{
             client.setLeftCall(client.getLeftCall() - minutes);
         }
         clientDao.update(client);
+        return cost;
     }
 
-    public void dataUse(String cid, double data, String year, String month) {
+    public double dataUse(String cid, double data, String year, String month) {
         Client client = clientDao.find(cid);
+        double cost = 0;
         if(client.getLeftNationalData() < data){
             data = data - client.getLeftNationalData();
             client.setLeftNationalData(0);
             if(client.getLeftLocalData() < data){
+                cost = (data - client.getLeftLocalData()) * 3;
                 client.setLeftLocalData(0);
-                double cost = (data - client.getLeftLocalData()) * 3;
                 client.setBalance(client.getBalance() - cost);
                 monthlyBillDao.update(cost, cid, year, month);
             }else{
@@ -142,6 +145,7 @@ public class BusinessManagementImpl implements BusinessManagement {
             client.setLeftNationalData(client.getLeftNationalData() - data);
         }
         clientDao.update(client);
+        return cost;
     }
 
     public MonthlyBill getMonthlyBill(String cid, String year, String month) {

@@ -17,7 +17,9 @@ public class Main {
          *      在用户退订套餐时，取退订日期，
          *      所以当套餐结束日期是‘1970-01-01’时，就说明此订单还未结束。
          */
+        long a1 = System.currentTimeMillis();
         ArrayList<Order> orders = businessManagement.getPackage("cid-003");
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a1)/1000f+" 秒");
         for(Order order : orders){
             System.out.println("订单编号: " + order.getOid() + "; 套餐编号: " + order.getPid() +
             "; 客户编号: " + order.getCid() + "; 起始日期: " + order.getStartDate() +
@@ -40,8 +42,9 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
-
+        long a2 = System.currentTimeMillis();
         boolean res1 = businessManagement.subscribePackage("oid-005","cid-004","pid-001",startDate,endDate1);
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a2)/1000f+" 秒");
         if(res1)
             System.out.println("订购成功！");
         else
@@ -54,8 +57,9 @@ public class Main {
          *               扣除，最后将订单中的endDate填上
          * 返回值：是否退订成功
          * 检查方法：查看该用户的余额、月账单、订单等变动即可验证
-         * 注意：建议此方法和上一个方法分开运行(运行一个时注释掉另一个)，因为方法中针对的是同一个人，
+         * 注意：1.建议此方法和上一个方法分开运行(运行一个时注释掉另一个)，因为方法中针对的是同一个人，
          *       同时运行的话不易检查验证方法正确性。
+         *       2.此方法应在上一个方法运行之后再运行，因为此方法中退订的订单是上个方法中订购的订单
          */
         Date endDate2 = new Date();
         String end2 = "2018-10-30";     //比实际时间晚一天，理由同上
@@ -64,7 +68,9 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
+        long a3 = System.currentTimeMillis();
         boolean res2 = businessManagement.immediatelyUnsubscribePackage("oid-005",endDate2);
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a3)/1000f+" 秒");
         if(res2)
             System.out.println("立即退订成功！");
         else
@@ -85,7 +91,9 @@ public class Main {
         }catch (Exception e){
             e.printStackTrace();
         }
+        long a4 = System.currentTimeMillis();
         boolean res3 = businessManagement.unsubscribePackageNextMonth("oid-001",endDate3);
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a4)/1000f+" 秒");
         if(res3)
             System.out.println("退订成功(次月生效)！");
         else
@@ -99,8 +107,11 @@ public class Main {
          * 检查方法：查看对应client的剩余优惠通话时间、余额和本月账单即可验证
          * 注意：改变通话时长可以验证优惠时间不足时的情况
          */
-        businessManagement.call("cid-002",101,"2018","10");
-        System.out.println("通话结束！");
+
+        long a5 = System.currentTimeMillis();
+        double callCost = businessManagement.call("cid-002",101,"2018","10");
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a5)/1000f+" 秒");
+        System.out.println("通话结束！费用: " + callCost + " 元");
 
         /**
          * 方法：某个用户在使用流量情况下的资费生成
@@ -109,15 +120,20 @@ public class Main {
          *               次使用的流量按照3元/M的收费标准进行收费
          * 检查方法：查看该用户的流量剩余、余额和本月账单即可验证
          */
-        businessManagement.dataUse("cid-003",200,"2018","10");
-        System.out.println("使用流量结束！");
+
+        long a6 = System.currentTimeMillis();
+        double dataUseCost = businessManagement.dataUse("cid-003",4097,"2018","10");
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a6)/1000f+" 秒");
+        System.out.println("使用流量结束！费用: " + dataUseCost + " 元");
 
         /**
          * 方法：某个用户月账单的生成
          * 账单定义：包含每个月订单的费用，额外的流量、短信、通话时间所产生的费用
          * 返回值：此用户指定月份的账单(仅有总消费费用)。
          */
+        long a7 = System.currentTimeMillis();
         MonthlyBill bill = businessManagement.getMonthlyBill("cid-001","2018","10");
+        System.out.println("执行耗时 : "+(System.currentTimeMillis()-a7)/1000f+" 秒");
         System.out.println("客户编号: " + bill.getCid() + "; 账单年份: " + bill.getBillYear() +
                 "; 账单月份: " + bill.getBillMonth() + "; 账单总费用: " + bill.getCost());
     }

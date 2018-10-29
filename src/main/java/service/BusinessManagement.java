@@ -15,9 +15,9 @@ public interface BusinessManagement {
 
     public boolean unsubscribePackageNextMonth(String oid, Date endDate);
 
-    public void call(String cid, int minutes, String year, String month);
+    public double call(String cid, int minutes, String year, String month);
 
-    public void dataUse(String cid, double data, String year, String month);
+    public double dataUse(String cid, double data, String year, String month);
 
     public MonthlyBill getMonthlyBill(String cid, String year, String month);
 }
