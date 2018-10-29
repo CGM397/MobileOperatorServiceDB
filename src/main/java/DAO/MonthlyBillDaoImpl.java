@@ -58,7 +58,7 @@ public class MonthlyBillDaoImpl implements MonthlyBillDao{
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,cid);
             stmt.setString(2,billYear);
-            stmt.setString(3,billYear);
+            stmt.setString(3,billMonth);
             ResultSet rs = stmt.executeQuery();
             if(rs.next()){
                 res = new MonthlyBill(cid, billYear, billMonth, rs.getDouble("cost"));

@@ -10,5 +10,7 @@ public interface OrderDao {
 
     public boolean update(String oid, Date endDate);
 
+    public Order findOne(String oid);
+
     public ArrayList<Order> find(String cid);
 }

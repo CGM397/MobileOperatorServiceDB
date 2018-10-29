@@ -6,24 +6,37 @@ public class Client {
 
     private int leftCall;
 
+    private int maxCall;
+
     private int leftMessage;
+
+    private int maxMessage;
 
     private double leftLocalData;
 
+    private double maxLocalData;
+
     private double leftNationalData;
+
+    private double maxNationalData;
 
     private double balance;
 
     public Client() {}
 
-    public Client(String cid, int maxCall, int leftMessage,
-                  double leftLocalData, double leftNationalData, double balance){
+    public Client(String cid, int leftCall, int maxCall, int leftMessage, int maxMessage,
+                  double leftLocalData, double maxLocalData, double leftNationalData,
+                  double maxNationalData, double balance) {
         this.cid = cid;
-        this.leftCall = maxCall;
+        this.leftCall = leftCall;
+        this.maxCall = maxCall;
         this.leftMessage = leftMessage;
+        this.maxMessage = maxMessage;
         this.leftLocalData = leftLocalData;
+        this.maxLocalData = maxLocalData;
         this.leftNationalData = leftNationalData;
-        this.balance =balance;
+        this.maxNationalData = maxNationalData;
+        this.balance = balance;
     }
 
     public String getCid() {
@@ -42,12 +55,28 @@ public class Client {
         this.leftCall = leftCall;
     }
 
+    public int getMaxCall() {
+        return maxCall;
+    }
+
+    public void setMaxCall(int maxCall) {
+        this.maxCall = maxCall;
+    }
+
     public int getLeftMessage() {
         return leftMessage;
     }
 
     public void setLeftMessage(int leftMessage) {
         this.leftMessage = leftMessage;
+    }
+
+    public int getMaxMessage() {
+        return maxMessage;
+    }
+
+    public void setMaxMessage(int maxMessage) {
+        this.maxMessage = maxMessage;
     }
 
     public double getLeftLocalData() {
@@ -58,12 +87,28 @@ public class Client {
         this.leftLocalData = leftLocalData;
     }
 
+    public double getMaxLocalData() {
+        return maxLocalData;
+    }
+
+    public void setMaxLocalData(double maxLocalData) {
+        this.maxLocalData = maxLocalData;
+    }
+
     public double getLeftNationalData() {
         return leftNationalData;
     }
 
     public void setLeftNationalData(double leftNationalData) {
         this.leftNationalData = leftNationalData;
+    }
+
+    public double getMaxNationalData() {
+        return maxNationalData;
+    }
+
+    public void setMaxNationalData(double maxNationalData) {
+        this.maxNationalData = maxNationalData;
     }
 
     public double getBalance() {
